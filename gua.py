@@ -10,7 +10,7 @@ from routes.routes_todo import route_dict as todo_routes
 from routes.routes_weibo import route_dict as weibo_routes
 from routes.routes_comment import route_dict as comment_routes
 
-from utils import log
+from utils import log, redirect
 
 
 # 定义一个 class 用于保存请求的数据
@@ -52,10 +52,13 @@ class Request(object):
         args = body.split('&')
         f = {}
         log('form debug', args, len(args))
-        for arg in args:
-            k, v = arg.split('=')
-            f[k] = v
-        return f
+        try:
+            for arg in args:
+                k, v = arg.split('=')
+                f[k] = v
+            return f
+        except:
+            return False
 
 
 #

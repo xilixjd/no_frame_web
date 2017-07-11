@@ -164,7 +164,7 @@ class User(Model):
         self.username = form.get('username', '')
         pwd = form.get('password', '')
         # self.password = self.sha1_password(pwd)
-        self.password = pwd
+        self.password = form.get('password', '')
 
     def sha1_password(self, pwd):
         import hashlib
@@ -173,11 +173,11 @@ class User(Model):
         # 返回摘要字符串, 这里是 4843c628d74aa10769eb21b832f00a778db8b17e
         return s.hexdigest()
 
-    def validate_login(self):
+    def validate_login(self, form):
         u = User.find_by(username=self.username)
         log('valid login', u, self)
         if u is not None:
-            pwd = self.sha1_password(self.password)
+            pwd = self.sha1_password(form['password'])
             log('compare pwd', pwd, u.password == pwd)
             return u.password == pwd
         else:

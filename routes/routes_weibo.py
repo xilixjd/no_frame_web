@@ -55,6 +55,8 @@ def add(request):
     user = current_user(request)
     # 创建微博
     form = request.form()
+    if not form:
+        return error(request)
     w = Tweet(form)
     w.user_id = user.id
     w.save()

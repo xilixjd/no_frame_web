@@ -50,7 +50,7 @@ def route_login(request):
     if request.method == 'POST':
         form = request.form()
         u = User(form)
-        if u.validate_login():
+        if u.validate_login(form):
             user = User.find_by(username=u.username)
             # 设置 session
             session_id = random_str()
